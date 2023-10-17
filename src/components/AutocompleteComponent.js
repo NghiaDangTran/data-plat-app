@@ -22,7 +22,7 @@ function AutocompleteComponent() {
         const fetchOptions = async () => {
             try {
                 const response = await fetch(
-                    "https://df76-142-188-85-119.ngrok-free.app/api/food/name",
+                    "https://1b1f-74-12-186-31.ngrok-free.app/api/food/name",
                     {
                         headers: {
                             "ngrok-skip-browser-warning": "1",
@@ -43,7 +43,7 @@ function AutocompleteComponent() {
 
     const handleDownload = async () => {
         const response = await fetch(
-            "https://df76-142-188-85-119.ngrok-free.app/api/food/CSV",
+            "https://1b1f-74-12-186-31.ngrok-free.app/api/food/CSV",
             {
                 method: "POST",
                 headers: {
@@ -52,9 +52,9 @@ function AutocompleteComponent() {
                 },
                 body: JSON.stringify({
                     foodName: selectedFood[0], // assuming the user selects only one food
-                    store: selectedStore,
-                    startDate: startDate.toISOString().split("T")[0],
-                    endDate: endDate.toISOString().split("T")[0],
+                    // store: selectedStore,
+                    // startDate: startDate.toISOString().split("T")[0],
+                    // endDate: endDate.toISOString().split("T")[0],
                 }),
             }
         );
@@ -63,8 +63,7 @@ function AutocompleteComponent() {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = `${selectedFood[0]}_${startDate.toISOString().split("T")[0]}_${endDate.toISOString().split("T")[0]
-            }.csv`;
+        a.download = `${selectedFood[0]}.csv`;
         document.body.appendChild(a);
         a.click();
         a.remove();
@@ -106,36 +105,8 @@ function AutocompleteComponent() {
                         placeholder="Choose a food..."
                         selected={selectedFood}
                     />
-                    <Form.Group className="mt-4">
-                        <Form.Label>Select Store</Form.Label>
-                        <Form.Control
-                            as="select"
-                            onChange={(e) => setSelectedStore(e.target.value)}
-                        >
-                            <option value="">-- Choose Store --</option>
-                            {stores.map((store) => (
-                                <option key={store} value={store}>
-                                    {store}
-                                </option>
-                            ))}
-                        </Form.Control>
-                    </Form.Group>
-                    <Form.Group className="mt-4">
-                        <Form.Label>Start Date</Form.Label>
-                        <DatePicker
-                            className="form-control"
-                            selected={startDate}
-                            onChange={(date) => setStartDate(date)}
-                        />
-                    </Form.Group>
-                    <Form.Group className="mt-4">
-                        <Form.Label>End Date</Form.Label>
-                        <DatePicker
-                            className="form-control"
-                            selected={endDate}
-                            onChange={(date) => setEndDate(date)}
-                        />
-                    </Form.Group>
+
+
                     <Button
                         className="mt-4"
                         variant="primary"

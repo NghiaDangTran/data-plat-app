@@ -28,7 +28,7 @@ function SwitchModeComponent() {
                         </Button>
                         <Button
                             variant={mode === "add" ? "primary" : "outline-primary"}
-                            onClick={() => setMode("add")}
+                            // onClick={() => setMode("add")}
                         >
                             Add Data
                         </Button>
