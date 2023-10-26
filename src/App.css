@@ -36,3 +36,19 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+.custom-modal .modal-content {
+  overflow: hidden;
+}
+
+.custom-modal .modal-body {
+  overflow-y: auto;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.custom-modal .modal-body::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}

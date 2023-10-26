@@ -3,11 +3,10 @@ import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Card, Form, Button, Container } from "react-bootstrap";
+import { Card, Form, Button, Container, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Spinner } from "react-bootstrap"; // Import Spinner from react-bootstrap
-
-const stores = ["loblaw", "nofrills"];
+import Papa from "papaparse";
 
 function AutocompleteComponent() {
     const [selectedFood, setSelectedFood] = useState([]);
@@ -17,57 +16,94 @@ function AutocompleteComponent() {
     const [loading, setLoading] = useState(true); // Loading state
     const [options, setOptions] = useState([]); // State to store fetched options
     const [mode, setMode] = useState("download");
+
+    const [showModal, setShowModal] = useState(false);
+    const [csvData, setCsvData] = useState([]);
+    const [loadingCsv, setLoadingCsv] = useState(false);
+
+    const handleShowModal = async () => {
+        setShowModal(true);
+        setLoadingCsv(true);
+        try {
+            const response = await fetch(
+                "https://e4ae-74-12-186-31.ngrok-free.app/api/food/CSV",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "ngrok-skip-browser-warning": "1",
+                    },
+                    body: JSON.stringify({
+                        foodName: selectedFood[0], // assuming the user selects only one food
+                        // store: selectedStore,
+                        // startDate: startDate.toISOString().split("T")[0],
+                        // endDate: endDate.toISOString().split("T")[0],
+                    }),
+                }
+            );
+            const csvText = await response.text();
+            const results = Papa.parse(csvText, {
+                header: true,
+                skipEmptyLines: true,
+            });
+            console.log(results.data);
+            setCsvData(results.data);
+        } catch (error) {
+            console.error("Failed to fetch CSV data:", error);
+        }
+        setLoadingCsv(false);
+    };
     useEffect(() => {
         // Fetch options from the API
         const fetchOptions = async () => {
             try {
                 const response = await fetch(
-                    "https://1b1f-74-12-186-31.ngrok-free.app/api/food/name",
-                    {
-                        headers: {
-                            "ngrok-skip-browser-warning": "1",
-                        },
-                    }
-                );
-                const data = await response.json();
-                setOptions(data);
-                setLoading(false); // Set loading to false after fetching
-            } catch (error) {
-                console.error("Failed to fetch options:", error);
-                setLoading(false);
+            "https://e4ae-74-12-186-31.ngrok-free.app/api/food/name",
+            {
+                headers: {
+                    "ngrok-skip-browser-warning": "1",
+                },
             }
-        };
+        );
+            const data = await response.json();
+            setOptions(data);
+            setLoading(false); // Set loading to false after fetching
+        } catch (error) {
+            console.error("Failed to fetch options:", error);
+            setLoading(false);
+        }
+    };
 
-        fetchOptions();
-    }, []);
+      fetchOptions();
+  }, []);
 
     const handleDownload = async () => {
         const response = await fetch(
-            "https://1b1f-74-12-186-31.ngrok-free.app/api/food/CSV",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "ngrok-skip-browser-warning": "1",
-                },
-                body: JSON.stringify({
-                    foodName: selectedFood[0], // assuming the user selects only one food
-                    // store: selectedStore,
-                    // startDate: startDate.toISOString().split("T")[0],
-                    // endDate: endDate.toISOString().split("T")[0],
-                }),
-            }
-        );
+        "https://e4ae-74-12-186-31.ngrok-free.app/api/food/CSV",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "ngrok-skip-browser-warning": "1",
+            },
+            body: JSON.stringify({
+                foodName: selectedFood[0], // assuming the user selects only one food
+                // store: selectedStore,
+                // startDate: startDate.toISOString().split("T")[0],
+                // endDate: endDate.toISOString().split("T")[0],
+            }),
+        }
+    );
 
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `${selectedFood[0]}.csv`;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-    };
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${selectedFood[0]}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+  };
 
     if (loading) {
         return (
@@ -106,20 +142,89 @@ function AutocompleteComponent() {
                         selected={selectedFood}
                     />
 
+                  <Button
+                      className="mt-4 mr-3"
+                      variant="primary"
+                      block
+                      style={{ borderRadius: "25px" }}
+                      onClick={handleShowModal}
+                  >
+                      Show Data
+                  </Button>
 
-                    <Button
-                        className="mt-4"
-                        variant="primary"
-                        block
-                        style={{ borderRadius: "25px" }}
-                        onClick={handleDownload}
-                    >
-                        Download
-                    </Button>
-                </Card.Body>
-            </Card>
-        </Container>
-    );
+                  <Button
+                      className="mt-4"
+                      variant="primary"
+                      block
+                      style={{ borderRadius: "25px" }}
+                      onClick={handleDownload}
+                  >
+                      Download
+                  </Button>
+              </Card.Body>
+          </Card>
+
+          <Modal
+              className="custom-modal"
+              show={showModal}
+              onHide={() => setShowModal(false)}
+              size="xl"
+              centered
+              style={{ maxWidth: "90%" }}
+          >
+              <Modal.Header closeButton>
+                  <Modal.Title>CSV Data</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                  {loadingCsv ? (
+                      <Spinner animation="border" />
+                  ) : (
+                      <div style={{ width: "90%", margin: "auto" }}>
+                          <table className="table table-bordered">
+                              <thead>
+                                  <tr>
+                                      <th>Food Name</th>
+                                      <th>Food Category</th>
+                                      <th>Store Name</th>
+                                      <th>Store Location</th>
+                                      <th>Date</th>
+                                      <th>Price</th>
+                                      <th>Unit Count</th>
+                                      <th>Unit Type</th>
+                                      <th>Base Quantity</th>
+                                      <th>Base Unit</th>
+                                      <th>Price Per Unit</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  {csvData.map((row, index) => (
+                                      <tr key={index}>
+                                          <td>{row.foodName}</td>
+                                          <td>{row.foodCategory}</td>
+                                          <td>{row.storeName}</td>
+                                          <td>{row.storeLocation}</td>
+                                          <td>{row.date}</td>
+                                          <td>{row.price}</td>
+                                          <td>{row.unitCount}</td>
+                                          <td>{row.unitType}</td>
+                                          <td>{row.baseQuantity}</td>
+                                          <td>{row.baseUnit}</td>
+                                          <td>{row.pricePerUnit}</td>
+                                      </tr>
+                                  ))}
+                              </tbody>
+                          </table>
+                      </div>
+                  )}
+              </Modal.Body>
+              <Modal.Footer>
+                  <Button variant="secondary" onClick={() => setShowModal(false)}>
+                      Close
+                  </Button>
+              </Modal.Footer>
+          </Modal>
+      </Container>
+  );
 }
 
 export default AutocompleteComponent;
