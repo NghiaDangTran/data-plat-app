@@ -21,12 +21,12 @@ function AutocompleteComponent() {
     const [csvData, setCsvData] = useState([]);
     const [loadingCsv, setLoadingCsv] = useState(false);
 
-    const handleShowModal = async () => {
+    const handleShowModalAll = async () => {
         setShowModal(true);
         setLoadingCsv(true);
         try {
             const response = await fetch(
-                "https://e4ae-74-12-186-31.ngrok-free.app/api/food/CSV",
+                "https://ea51-74-12-186-31.ngrok-free.app/api/food/CSVall",
                 {
                     method: "POST",
                     headers: {
@@ -53,25 +53,61 @@ function AutocompleteComponent() {
         }
         setLoadingCsv(false);
     };
+
+    const handleShowModal = async () => {
+        setShowModal(true);
+        setLoadingCsv(true);
+        try {
+            const response = await fetch(
+          "https://ea51-74-12-186-31.ngrok-free.app/api/food/CSV",
+          {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+                  "ngrok-skip-browser-warning": "1",
+              },
+              body: JSON.stringify({
+                  foodName: selectedFood[0], // assuming the user selects only one food
+                  // store: selectedStore,
+                  // startDate: startDate.toISOString().split("T")[0],
+                  // endDate: endDate.toISOString().split("T")[0],
+              }),
+          }
+      );
+            const csvText = await response.text();
+            const results = Papa.parse(csvText, {
+                header: true,
+                skipEmptyLines: true,
+            });
+            console.log(results.data);
+            setCsvData(results.data);
+        } catch (error) {
+            console.error("Failed to fetch CSV data:", error);
+        }
+        setLoadingCsv(false);
+    };
     useEffect(() => {
         // Fetch options from the API
         const fetchOptions = async () => {
             try {
                 const response = await fetch(
-            "https://e4ae-74-12-186-31.ngrok-free.app/api/food/name",
+            "https://ea51-74-12-186-31.ngrok-free.app/api/food/name",
             {
                 headers: {
                     "ngrok-skip-browser-warning": "1",
                 },
             }
         );
-            const data = await response.json();
-            setOptions(data);
-            setLoading(false); // Set loading to false after fetching
-        } catch (error) {
-            console.error("Failed to fetch options:", error);
-            setLoading(false);
-        }
+          const rawData = await response.json(); // rawData is the array with duplicates
+
+          let mySet = new Set(rawData);
+          let newArray = [...mySet];
+          setOptions(newArray);
+          setLoading(false); // Set loading to false after fetching
+      } catch (error) {
+          console.error("Failed to fetch options:", error);
+          setLoading(false);
+      }
     };
 
       fetchOptions();
@@ -79,7 +115,7 @@ function AutocompleteComponent() {
 
     const handleDownload = async () => {
         const response = await fetch(
-        "https://e4ae-74-12-186-31.ngrok-free.app/api/food/CSV",
+        "https://ea51-74-12-186-31.ngrok-free.app/api/food/CSV",
         {
             method: "POST",
             headers: {
@@ -151,7 +187,15 @@ function AutocompleteComponent() {
                   >
                       Show Data
                   </Button>
-
+                  <Button
+                      className="mt-4 mr-3"
+                      variant="primary"
+                      block
+                      style={{ borderRadius: "25px" }}
+                      onClick={handleShowModalAll}
+                  >
+                      Show All Data
+                  </Button>
                   <Button
                       className="mt-4"
                       variant="primary"
@@ -199,19 +243,19 @@ function AutocompleteComponent() {
                               <tbody>
                                   {csvData.map((row, index) => (
                                       <tr key={index}>
-                                          <td>{row.foodName}</td>
-                                          <td>{row.foodCategory}</td>
-                                          <td>{row.storeName}</td>
-                                          <td>{row.storeLocation}</td>
-                                          <td>{row.date}</td>
-                                          <td>{row.price}</td>
-                                          <td>{row.unitCount}</td>
-                                          <td>{row.unitType}</td>
-                                          <td>{row.baseQuantity}</td>
-                                          <td>{row.baseUnit}</td>
-                                          <td>{row.pricePerUnit}</td>
-                                      </tr>
-                                  ))}
+                          <td>{row.FoodName}</td>
+                          <td>{row.FoodCategory}</td>
+                          <td>{row.StoreName}</td>
+                          <td>{row.StoreLocation}</td>
+                          <td>{row.Date}</td>
+                          <td>{row.Price}</td>
+                          <td>{row.UnitCount}</td>
+                          <td>{row.UnitType}</td>
+                          <td>{row.BaseQuantity}</td>
+                          <td>{row.BaseUnit}</td>
+                          <td>{row.PricePerUnit}</td>
+                      </tr>
+                  ))}
                               </tbody>
                           </table>
                       </div>

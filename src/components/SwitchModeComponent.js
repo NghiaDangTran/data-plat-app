@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Card, Container } from "react-bootstrap";
 import AutocompleteComponent from "./AutocompleteComponent";
 import AddDataCard from "./AddDataCard";
+import HierarchicalSelect from "./HierarchicalSelect";
 
 function SwitchModeComponent() {
     const [mode, setMode] = useState("download"); // "download" or "add"
@@ -28,13 +29,17 @@ function SwitchModeComponent() {
                         </Button>
                         <Button
                             variant={mode === "add" ? "primary" : "outline-primary"}
-                            // onClick={() => setMode("add")}
+                            onClick={() => setMode("add")}
                         >
-                            Add Data
+                            Category Data
                         </Button>
                     </div>
 
-                    {mode === "download" ? <AutocompleteComponent /> : <AddDataCard />}
+                    {mode === "download" ? (
+                        <AutocompleteComponent />
+                    ) : (
+                        <HierarchicalSelect />
+                    )}
                 </Card.Body>
             </Card>
         </Container>
