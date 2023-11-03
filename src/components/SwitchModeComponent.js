@@ -25,7 +25,7 @@ function SwitchModeComponent() {
                             variant={mode === "download" ? "primary" : "outline-primary"}
                             onClick={() => setMode("download")}
                         >
-                            Download Data
+                            Name Data
                         </Button>
                         <Button
                             variant={mode === "add" ? "primary" : "outline-primary"}
