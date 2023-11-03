@@ -187,15 +187,7 @@ function AutocompleteComponent() {
                   >
                       Show Data
                   </Button>
-                  <Button
-                      className="mt-4 mr-3"
-                      variant="primary"
-                      block
-                      style={{ borderRadius: "25px" }}
-                      onClick={handleShowModalAll}
-                  >
-                      Show All Data
-                  </Button>
+
                   <Button
                       className="mt-4"
                       variant="primary"
