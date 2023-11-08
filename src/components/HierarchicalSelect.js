@@ -110,7 +110,7 @@ function HierarchicalSelect() {
         setLoadingCsv(true);
         try {
             const response = await fetch(
-                "https://ea51-74-12-186-31.ngrok-free.app/api/food/CSVall",
+                "https://e29a-74-12-186-31.ngrok-free.app/api/food/CSVall",
                 {
                     method: "POST",
                     headers: {
@@ -130,7 +130,7 @@ function HierarchicalSelect() {
               header: true,
               skipEmptyLines: true,
           });
-          console.log(results.data);
+            //   console.log(results.data);
           setCsvData(results.data);
       } catch (error) {
           console.error("Failed to fetch CSV data:", error);
@@ -149,7 +149,7 @@ function HierarchicalSelect() {
       // categoryName,
       try {
           const response = await fetch(
-              "https://ea51-74-12-186-31.ngrok-free.app/api/food/CSV",
+              "https://e29a-74-12-186-31.ngrok-free.app/api/food/CSV",
               {
                   method: "POST",
                   headers: {
@@ -170,7 +170,7 @@ function HierarchicalSelect() {
                 header: true,
                 skipEmptyLines: true,
             });
-            console.log(results.data);
+          // console.log(results.data);
             setCsvData(results.data);
         } catch (error) {
             console.error("Failed to fetch CSV data:", error);
@@ -181,7 +181,7 @@ function HierarchicalSelect() {
         // Fetch options from the API
         const fetchOptions = async () => {
             try {
-                // const response = await fetch("https://ea51-74-12-186-31.ngrok-free.app/api/food/name", {
+                // const response = await fetch("https://e29a-74-12-186-31.ngrok-free.app/api/food/name", {
                 //   headers: {
                 //     "ngrok-skip-browser-warning": "1",
                 //   },
@@ -200,7 +200,7 @@ function HierarchicalSelect() {
 
     const handleDownload = async () => {
         const response = await fetch(
-            "https://ea51-74-12-186-31.ngrok-free.app/api/food/CSV",
+            "https://e29a-74-12-186-31.ngrok-free.app/api/food/CSV",
             {
                 method: "POST",
                 headers: {
