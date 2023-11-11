@@ -3,11 +3,10 @@ import { Button, Form } from "react-bootstrap";
 
 export default function AddDataCard() {
     const [foodName, setFoodName] = useState("");
-
     const handleAddData = async () => {
         try {
             const response = await fetch(
-                "https://e29a-74-12-186-31.ngrok-free.app/api/food/add",
+                "https://3024-2604-3d09-a576-f900-c9a0-9b8-9fe6-f650.ngrok-free.app/api/food/add",
                 {
                     method: "POST",
                     headers: {
