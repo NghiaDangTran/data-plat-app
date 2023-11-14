@@ -35,7 +35,7 @@ function AutocompleteComponent() {
         setLoadingCsv(true);
         try {
             const response = await fetch(
-                " https://ac95-76-64-103-207.ngrok-free.app/api/food/CSVall",
+                "https://e4aa-76-64-103-207.ngrok-free.app/api/food/CSVall",
                 {
                     method: "POST",
                     headers: {
@@ -74,7 +74,7 @@ function AutocompleteComponent() {
         // categoryName,
         try {
             const response = await fetch(
-                " https://ac95-76-64-103-207.ngrok-free.app/api/food/CSV",
+                "https://e4aa-76-64-103-207.ngrok-free.app/api/food/CSV",
                 {
                     method: "POST",
                     headers: {
@@ -107,7 +107,7 @@ function AutocompleteComponent() {
         const fetchOptions = async () => {
             try {
                 const response = await fetch(
-                    " https://ac95-76-64-103-207.ngrok-free.app/api/food/name",
+                    "https://e4aa-76-64-103-207.ngrok-free.app/api/food/name",
                     {
                         headers: {
                             "ngrok-skip-browser-warning": "1",
@@ -131,7 +131,7 @@ function AutocompleteComponent() {
 
     const handleDownload = async () => {
         const response = await fetch(
-            " https://ac95-76-64-103-207.ngrok-free.app/api/food/CSV",
+            "https://e4aa-76-64-103-207.ngrok-free.app/api/food/CSV",
             {
                 method: "POST",
                 headers: {
