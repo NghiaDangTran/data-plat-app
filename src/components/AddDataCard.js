@@ -6,7 +6,7 @@ export default function AddDataCard() {
     const handleAddData = async () => {
         try {
             const response = await fetch(
-                "https://3bb0-76-64-103-207.ngrok-free.app/api/food/add",
+                "https://db12-76-64-103-207.ngrok-free.app/api/food/add",
                 {
                     method: "POST",
                     headers: {

@@ -110,7 +110,7 @@ function HierarchicalSelect() {
         setLoadingCsv(true);
         try {
             const response = await fetch(
-                "https://3bb0-76-64-103-207.ngrok-free.app/api/food/CSVall",
+                "https://db12-76-64-103-207.ngrok-free.app/api/food/CSVall",
                 {
                     method: "POST",
                     headers: {
@@ -149,7 +149,7 @@ function HierarchicalSelect() {
       // categoryName,
       try {
           const response = await fetch(
-              "https://3bb0-76-64-103-207.ngrok-free.app/api/food/CSV",
+              "https://db12-76-64-103-207.ngrok-free.app/api/food/CSV",
               {
                   method: "POST",
                   headers: {
@@ -181,7 +181,7 @@ function HierarchicalSelect() {
         // Fetch options from the API
         const fetchOptions = async () => {
             try {
-                // const response = await fetch("https://3bb0-76-64-103-207.ngrok-free.app/api/food/name", {
+                // const response = await fetch("https://db12-76-64-103-207.ngrok-free.app/api/food/name", {
                 //   headers: {
                 //     "ngrok-skip-browser-warning": "1",
                 //   },
@@ -200,7 +200,7 @@ function HierarchicalSelect() {
 
     const handleDownload = async () => {
         const response = await fetch(
-            "https://3bb0-76-64-103-207.ngrok-free.app/api/food/CSV",
+            "https://db12-76-64-103-207.ngrok-free.app/api/food/CSV",
             {
                 method: "POST",
                 headers: {
