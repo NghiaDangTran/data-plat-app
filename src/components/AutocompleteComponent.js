@@ -19,8 +19,8 @@ import Papa from "papaparse";
 function AutocompleteComponent() {
     const [selectedFood, setSelectedFood] = useState([]);
     const [selectedStore, setSelectedStore] = useState("");
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
+    const [startDate, setStartDate] = useState((new Date()).setHours(0, 0, 0, 0));
+    const [endDate, setEndDate] = useState((new Date()).setHours(23, 59, 59, 999));
     const [loading, setLoading] = useState(true); // Loading state
     const [options, setOptions] = useState([]); // State to store fetched options
     const [mode, setMode] = useState("download");
@@ -83,12 +83,12 @@ function AutocompleteComponent() {
                     },
                     body: JSON.stringify({
                         foodName: selectedFood[0], // assuming the user selects only one food
-        // store: selectedStore,
-                      startDate: startDate,
-                      endDate: endDate,
-                      locationName: selectedProvince,
-                  }),
-              }
+                        // store: selectedStore,
+                        startDate: startDate,
+                        endDate: endDate,
+                        locationName: selectedProvince,
+                    }),
+                }
       );
             const csvText = await response.text();
             const results = Papa.parse(csvText, {
@@ -140,7 +140,7 @@ function AutocompleteComponent() {
                 },
                 body: JSON.stringify({
                     foodName: selectedFood[0], // assuming the user selects only one food
-            // store: selectedStore,
+                    // store: selectedStore,
                     startDate: startDate,
                     endDate: endDate,
                     locationName: selectedProvince,
@@ -238,6 +238,7 @@ function AutocompleteComponent() {
                                 className="form-control"
                                 selected={endDate}
                                 onChange={(date) => {
+                                    console.log(date)
                                     setEndDate(date.setHours(23, 59, 59, 999));
                                 }}
                             />
