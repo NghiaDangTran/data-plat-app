@@ -1,66 +1,9 @@
-# matrix nxn
-# Rotate 90 degree
+Dear Dr. Sylvain Charlebois,
 
-# Input:
-# [1, 4, 7],
-# [2, 5, 8],
-# [3, 6, 9]
+I hope this message finds you well.
+
+I am writing to inform you of a ssmall issue I have recently discovered in our platform's codebase. It appears there is a bug that causes the system to collect only a small set of data from a search query. Consequently, the platform is currently gathering approximately only one-tenth of the available data from our sourced websites. I am actively working on resolving this issue. However, I wanted to preemptively notify you that, over the next few days, you might experience some irregularities or errors while using the platform's website.
 
 
-# [7,4,1]
-# [8,5,2]
-# [9,6,3]
-
-# [1,2,3,4]
-# [5,6,7,8]
-# [9,1,2,3]
-# [8,4,2,1]
-
-
-
-
-
-
-
-# []
-
-
-# []
-matrix=[[1,2,3],
-[4,5,6],
-[7,8,9]]
-
-
-
-for i in range(len(matrix)):
-    for j in range(len(matrix)//2):
-        
-        temp=matrix[i][j]
-        matrix[i][j]=matrix[j][i]
-        matrix[j][i]=temp
-
-
-
-
-
-
-
-for i in range(len(matrix)):
-
-    
-    matrix[i]=matrix[i][::-1]
-
-
-time coplex=o(nlogn)
-space complex= 1
-
-print(matrix)
-# Output:
-# [7, 4, 1],
-# [8, 5, 2],
-# [9, 6, 3][[7, 4, 1], [6, 5, 2], [9, 8, 3]]
-
-# You have to rotate the image in-place
-
-
-# how to rotate 90
+Best regards,
+Nghia Dang
