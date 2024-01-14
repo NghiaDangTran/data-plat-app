@@ -15,7 +15,7 @@ function SwitchModeComponent() {
             <Card
                 style={{
                     width: "30rem",
-                    height: "40rem",
+                    height: "auto",
                     boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)",
                 }}
             >
@@ -28,20 +28,28 @@ function SwitchModeComponent() {
                             Name Data
                         </Button>
                         <Button
+                            variant={mode === "category" ? "primary" : "outline-primary"}
+                            onClick={() => setMode("category")}
+                        >
+                            Category Data
+                        </Button>
+                        <Button
                             variant={mode === "add" ? "primary" : "outline-primary"}
                             onClick={() => setMode("add")}
                         >
-                            Category Data
+                            Add Data
                         </Button>
                     </div>
 
                     {mode === "download" ? (
                         <AutocompleteComponent />
-                    ) : (
+                    ) : mode === "category" ? (
                         <HierarchicalSelect />
-                    )}
+                    ) : <AddDataCard />}
                 </Card.Body>
+                <p>Note: If after you search and don't find the food you want try to add it to the data base</p>
             </Card>
+
         </Container>
     );
 }
