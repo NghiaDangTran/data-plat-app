@@ -27,12 +27,12 @@ function SwitchModeComponent() {
                         >
                             Name Data
                         </Button>
-                        <Button
+                        {/* <Button
                             variant={mode === "category" ? "primary" : "outline-primary"}
                             onClick={() => setMode("category")}
                         >
                             Category Data
-                        </Button>
+                        </Button> */}
                         <Button
                             variant={mode === "add" ? "primary" : "outline-primary"}
                             onClick={() => setMode("add")}

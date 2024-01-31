@@ -15,10 +15,73 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Spinner } from "react-bootstrap"; // Import Spinner from react-bootstrap
 import Papa from "papaparse";
+const groupedOptions = {
+    "Fresh or Frozen Beef": {},
+    "Fresh or Frozen Pork": {},
+    "Other Fresh or Frozen Meat": {},
+    "Fresh or Frozen Poultry": {},
+    "Ham and Bacon": {}, "Other Processed Meat": {},
+    "Fresh or Frozen Fish (including portions and fish sticks)": {},
+    "Canned and Other Preserved Fish": {},
+    Shellfish: {},
+    "Other Fish, Seafood and Other Marine Products": {},
+    "Fresh Milk": {},
+    Butter: {},
+    Cheese: {},
+    "Ice Cream and Related Products": {},
+    Eggs: {},
+    "Other Dairy Products": {},
+    "Bread, Rolls and Buns": {},
+    "Cookies and Crackers": {},
+    "Other Bakery Products": {},
+    "Rice and Rice-based Mixes": {},
+    "Breakfast Cereal and Other Cereal Products (excluding baby food)": {},
+    "Pasta Products": {},
+    "Flour and Flour-based Mixes": {},
+    "Other Cereal Products": {},
+    Apples: {},
+    Oranges: {},
+    Bananas: {},
+    "Other Fresh Fruit": {},
+    "Fruit Juices": {},
+    "Dried Fruit": {},
+    "Canned Fruit": {},
+    "Other Preserved Fruit and Fruit Preparations": {},
+    "Nuts and Seeds": {},
+    Potatoes: {},
+    Tomatoes: {},
+    Lettuce: {},
+    "Other Fresh Vegetables": {},
+    "Frozen Vegetables": {},
+    "Dried Vegetables": {},
+    "Canned Vegetables and Other Vegetable Preparations": {},
+    "Sugar and Confectionery": {},
+    "Fats and Oils": {},
+    "Coffee and Tea": {},
+    "Condiments, Spices and Vinegars": {},
+    "Other Food Preparations": {},
+    "Non-Alcoholic Beverages": {},
+    "Vegan and Plant-Based Alternatives": {},
+    Snacks: {},
+    "Seasonings and Condiments": {},
+
+    "Food Preparations and Ingredients": {},
+    "Fresh Herbs": {},
+    "Dried Herbs": {},
+    "Other Herbs and Supplements": {},
+
+    "Household Cleaning Products": {},
+    "Personal Care Items": {},
+    "Pet Food and Supplies": {},
+    "Other Household Items": {},
+};
+const data = Object.keys(groupedOptions)
 
 function AutocompleteComponent() {
     const [selectedFood, setSelectedFood] = useState([]);
     const [selectedFoodName, setSelectedFoodName] = useState("");
+    const [seletedCategory, setSelectedCategory] = useState([])
+    const [seletedCategoryname, setSelectedCategoryName] = useState("")
 
     const [storeName, setStoreName] = useState("")
     const [startDate, setStartDate] = useState((new Date()).setHours(0, 0, 0, 0));
@@ -85,7 +148,7 @@ function AutocompleteComponent() {
                         "ngrok-skip-browser-warning": "1",
                     },
                     body: JSON.stringify({
-                        foodName: selectedFood.length > 0 ? selectedFood[0] : selectedFoodName, // assuming the user selects only one food
+                        foodName: selectedFood.length > 0 ? selectedFood[0] : selectedFoodName, categoryName: seletedCategory.length > 0 ? seletedCategory[0] : seletedCategoryname,
                         storeName: storeName,
                         startDate: startDate,
                         endDate: endDate,
@@ -132,7 +195,7 @@ function AutocompleteComponent() {
                     return 0;
                 });
                 setOptions(newArray);
-                setLoading(false); 
+                setLoading(false);
             } catch (error) {
                 setLoading(false);
             }
@@ -153,7 +216,8 @@ function AutocompleteComponent() {
                     "ngrok-skip-browser-warning": "1",
                 },
                 body: JSON.stringify({
-                    foodName: selectedFood.length > 0 ? selectedFood[0] : selectedFoodName, // 
+                    foodName: selectedFood.length > 0 ? selectedFood[0] : selectedFoodName,
+                    categoryName: seletedCategory.length > 0 ? seletedCategory[0] : seletedCategoryname,
                     storeName: storeName,
                     startDate: startDate,
                     endDate: endDate,
@@ -219,6 +283,28 @@ function AutocompleteComponent() {
                                 style={{ width: "100%" }}
                                 onInputChange={(e) => {
                                     setSelectedFoodName(e)
+                                }
+
+                                }
+
+
+                            />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3 d-flex flex-column align-items-start">
+                            <Form.Label>Food Category:</Form.Label>
+                            <Typeahead
+                                id="food-typeahead"
+                                labelKey="name"
+                                onChange={(e) => {
+                                    setSelectedCategory(e)
+                                }}
+                                options={data}
+                                placeholder="All Category"
+                                selected={seletedCategory}
+                                style={{ width: "100%" }}
+                                onInputChange={(e) => {
+                                    setSelectedCategoryName(e)
                                 }
 
                                 }
