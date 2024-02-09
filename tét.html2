@@ -612,3 +612,48 @@
 
 
 https://gitkraken.dev/link/dnNjb2RlOi8vZWFtb2Rpby5naXRsZW5zL2xpbmsvci85ODMwNGMwNjMzNzgyYWUxZTIyMjRhNjE4NDVhMjVhODY1MjEzMmZhL2YvdCVDMyVBOXQuaHRtbDI%2FdXJsPWh0dHBzJTNBJTJGJTJGZ2l0aHViLmNvbSUyRk5naGlhRGFuZ1RyYW4lMkZkYXRhLXBsYXQtYXBwLmdpdA%3D%3D?origin=gitlens
+
+
+
+
+"dish":
+
+{
+
+"left":[{
+        "name": "Bánh Mì",
+        "price": "12",
+        "VAR": "https://via.placeholder.com/200"
+      },
+      {
+        "name": "Bánh Cuốn",
+        "price": "15",
+        "VAR": "https://via.placeholder.com/200"
+      }
+   ,
+      {
+        "name": "Gỏi Cuốn",
+        "price": "10",
+        "VAR": "https://via.placeholder.com/200"
+      }]
+
+,
+"right":[{
+        "name": "Gỏi Cuốn",
+        "price": "10",
+        "VAR": "https://via.placeholder.com/200"
+      }, {
+        "name": "Gỏi Cuốn",
+        "price": "10",
+        "VAR": "https://via.placeholder.com/200"
+      }]
+
+}
+
+
+ [
+    
+      ,
+       
+    
+  ]

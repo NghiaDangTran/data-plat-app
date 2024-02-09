@@ -94,14 +94,23 @@ function AutocompleteComponent() {
     const [showModal, setShowModal] = useState(false);
     const [csvData, setCsvData] = useState([]);
     const [loadingCsv, setLoadingCsv] = useState(false);
+    const [csvStatData, setCsvStatData] = useState([])
 
     // https://e501-142-188-91-60.ngrok-free.app
-    const handleShowModalAll = async () => {
+
+
+    const handleShowModalStat = async () => {
         setShowModal(true);
         setLoadingCsv(true);
+        //   foodName,
+        // startDate,
+        // endDate,
+        // storeName,
+        // locationName,
+        // categoryName,
         try {
             const response = await fetch(
-                "https://e501-142-188-91-60.ngrok-free.app/api/food/CSVall",
+                "https://e501-142-188-91-60.ngrok-free.app/api/food/compareprice",
                 {
                     method: "POST",
                     headers: {
@@ -109,20 +118,23 @@ function AutocompleteComponent() {
                         "ngrok-skip-browser-warning": "1",
                     },
                     body: JSON.stringify({
-                        foodName: selectedFood.length > 0 ? selectedFood[0] : selectedFoodName, // assuming the user selects only one food
-                        // store: selectedStore,
-                        // startDate: startDate.toISOString().split("T")[0],
-                        // endDate: endDate.toISOString().split("T")[0],
+                        foodName: selectedFood.length > 0 ? selectedFood[0] : selectedFoodName,
+                        categoryName: seletedCategory.length > 0 ? seletedCategory[0] : seletedCategoryname,
+                        storeName: storeName,
+                        startDate: startDate,
+                        endDate: endDate,
+                        locationName: selectedProvince,
                     }),
                 }
             );
-            const csvText = await response.text();
-            const results = Papa.parse(csvText, {
-                header: true,
-                skipEmptyLines: true,
-            });
-            // console.log(results.data);
-            setCsvData(results.data);
+
+            const dataCsv = await response.json();
+            console.log(dataCsv)
+
+
+            // // console.log(results.data);
+            setCsvStatData(dataCsv.stat)
+            setCsvData(dataCsv.csv);
         } catch (error) {
             console.error("Failed to fetch CSV data:", error);
         }
@@ -140,7 +152,8 @@ function AutocompleteComponent() {
         // categoryName,
         try {
             const response = await fetch(
-                "https://e501-142-188-91-60.ngrok-free.app/api/food/CSV",
+                "https://e501-142-188-91-60.ngrok-free.app/api/food/CSV"
+                ,
                 {
                     method: "POST",
                     headers: {
@@ -148,7 +161,8 @@ function AutocompleteComponent() {
                         "ngrok-skip-browser-warning": "1",
                     },
                     body: JSON.stringify({
-                        foodName: selectedFood.length > 0 ? selectedFood[0] : selectedFoodName, categoryName: seletedCategory.length > 0 ? seletedCategory[0] : seletedCategoryname,
+                        foodName: selectedFood.length > 0 ? selectedFood[0] : selectedFoodName,
+                        categoryName: seletedCategory.length > 0 ? seletedCategory[0] : seletedCategoryname,
                         storeName: storeName,
                         startDate: startDate,
                         endDate: endDate,
@@ -380,6 +394,16 @@ function AutocompleteComponent() {
                         </Button>
 
                         <Button
+                            className="mt-3 mr-3"
+                            variant="primary"
+                            block
+                            style={{ borderRadius: "25px" }}
+                            onClick={handleShowModalStat}
+                        >
+                            Compare Data
+                        </Button>
+
+                        <Button
                             className="mt-3"
                             variant="primary"
                             block
@@ -403,6 +427,7 @@ function AutocompleteComponent() {
                         onHide={() => {
                             setdownload(false)
                             setShowModal(false)
+                            setCsvStatData([])
                         }}
                         size="xl"
                         centered
@@ -416,47 +441,55 @@ function AutocompleteComponent() {
                                 <span>  Your Data is loading...                               <Spinner animation="border" />
                                 </span>
                             ) : (
+                                        <>
 
-                                        (<div style={{ width: "90%", margin: "auto" }}>
-                                    <table className="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>Food Name</th>
-                                                        <th>Search From</th>
+                                            ({csvStatData.length > 0 && (
+                                                <pre>
+                                                    {JSON.stringify(csvStatData, null, 2)}
+                                                </pre>
+                                            )} )
 
-                                                <th>Food Category</th>
-                                                <th>Store Name</th>
-                                                <th>Store Location</th>
-                                                <th>Date</th>
-                                                <th>Price</th>
-                                                <th>Unit Count</th>
-                                                <th>Unit Type</th>
-                                                <th>Base Quantity</th>
-                                                <th>Base Unit</th>
-                                                <th>Price Per Unit</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {csvData.map((row, index) => (
-                                                <tr key={index}>
-                                                    <td>{row.FoodName}</td>
-                                                    <td>{row.SearchFrom}</td>
+                                            (<div style={{ width: "90%", margin: "auto" }}>
+                                                <table className="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Food Name</th>
+                                                            <th>Search From</th>
 
-                                                    <td>{row.FoodCategory}</td>
-                                                    <td>{row.StoreName}</td>
-                                                    <td>{row.StoreLocation}</td>
-                                                    <td>{row.Date}</td>
-                                                    <td>{row.Price}</td>
-                                                    <td>{row.UnitCount}</td>
-                                                    <td>{row.UnitType}</td>
-                                                    <td>{row.BaseQuantity}</td>
-                                                    <td>{row.BaseUnit}</td>
-                                                    <td>{row.PricePerUnit}</td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>)
+                                                            <th>Food Category</th>
+                                                            <th>Store Name</th>
+                                                            <th>Store Location</th>
+                                                            <th>Date</th>
+                                                            <th>Price</th>
+                                                            <th>Unit Count</th>
+                                                            <th>Unit Type</th>
+                                                            <th>Base Quantity</th>
+                                                            <th>Base Unit</th>
+                                                            <th>Price Per Unit</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {csvData.map((row, index) => (
+                                                            <tr key={index}>
+                                                                <td>{row.FoodName}</td>
+                                                                <td>{row.SearchFrom}</td>
+
+                                                                <td>{row.FoodCategory}</td>
+                                                                <td>{row.StoreName}</td>
+                                                                <td>{row.StoreLocation}</td>
+                                                                <td>{row.Date}</td>
+                                                                <td>{row.Price}</td>
+                                                                <td>{row.UnitCount}</td>
+                                                                <td>{row.UnitType}</td>
+                                                                <td>{row.BaseQuantity}</td>
+                                                                <td>{row.BaseUnit}</td>
+                                                                <td>{row.PricePerUnit}</td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+                                            </div>)
+                                        </>
 
 
                             )
@@ -473,7 +506,7 @@ function AutocompleteComponent() {
                     </Modal>
                 </Card.Body>
             </Card>
-        </Container >
+        </Container>
     );
 }
 

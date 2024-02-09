@@ -85,7 +85,7 @@
         ol ol ol ol {
             list-style-type: decimal !important;
         }
-
+       
         @media screen and (max-width:480px) {
 
             .preheader .rightColumnContent,
@@ -342,95 +342,36 @@
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
+                                                            
+<table align="left" width="50%" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+    {{#each dish.left}}
+    <tr>
+    <td style="text-align:center; padding: 10px;">
+        <img src="{{this.VAR}}" alt="{{this.name}}" style="max-width:100%; border-radius:10px;">
+        <h3 style="color: #0a2540; font-size: 22px;">{{this.name}}</h3>
+        <p style="color: #0a2540; font-size: 18px;">${{this.price}}</p>
+    </td>
+    </tr>
+    {{/each}}
+</tbody>
+</table>
+<!-- Right Column Items -->
+<table align="right" width="50%" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+    {{#each dish.right}}
+    <tr>
+    <td style="text-align:center; padding: 10px;">
+        <img src="{{this.VAR}}" alt="{{this.name}}" style="max-width:100%; border-radius:10px;">
+        <h3 style="color: #0a2540; font-size: 22px;">{{this.name}}</h3>
+        <p style="color: #0a2540; font-size: 18px;">${{this.price}}</p>
+    </td>
+    </tr>
+    {{/each}}
+</tbody>
+</table>
 
 
-                                                            {{#each dish}}
-                                                            <table border="0" cellpadding="0" cellspacing="0"
-                                                                align="center" width="100%" role="module"
-                                                                data-type="columns" style="padding:30px 0px 0px 0px;"
-                                                                bgcolor="#FFFFFF" data-distribution="1">
-                                                                <tbody>
-                                                                    <tr role="module-content">
-                                                                        <td height="100%" valign="top">
-                                                                            <table width="580"
-                                                                                style="width:580px; border-spacing:0; border-collapse:collapse; margin:0px 10px 0px 10px;"
-                                                                                cellpadding="0" cellspacing="0"
-                                                                                align="left" border="0" bgcolor=""
-                                                                                class="column column-0">
-                                                                                <tbody>
-                                                                                    <tr>
-                                                                                        <td
-                                                                                            style="padding:0px;margin:0px;border-spacing:0;">
-                                                                                            <table class="wrapper"
-                                                                                                role="module"
-                                                                                                data-type="image"
-                                                                                                border="0"
-                                                                                                cellpadding="0"
-                                                                                                cellspacing="0"
-                                                                                                width="100%"
-                                                                                                style="table-layout: fixed;"
-                                                                                                data-muid="5d73f8d5-156f-489e-b060-d471d48715f0">
-                                                                                                <tbody>
-                                                                                                    <tr>
-                                                                                                        <td style="font-size:6px; line-height:10px; padding:0px 0px 0px 0px;"
-                                                                                                            valign="top"
-                                                                                                            align="center">
-                                                                                                            <img class="max-width"
-                                                                                                                border="0"
-                                                                                                                style="display:block; color:#000000; text-decoration:none; font-family:Helvetica, arial, sans-serif; font-size:16px; border-radius:10px; max-width:50% !important; width:40%; height:auto !important;"
-                                                                                                                width="232"
-                                                                                                                alt=""
-                                                                                                                data-proportionally-constrained="true"
-                                                                                                                data-responsive="true"
-                                                                                                                src="{{this.VAR}}">
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                </tbody>
-                                                                                            </table>
-                                                                                            <table class="module"
-                                                                                                role="module"
-                                                                                                data-type="text"
-                                                                                                border="0"
-                                                                                                cellpadding="0"
-                                                                                                cellspacing="0"
-                                                                                                width="100%"
-                                                                                                style="table-layout: fixed;"
-                                                                                                data-muid="ejBEj4aEVvCTqnBwZLSTLQ"
-                                                                                                data-mc-module-version="2019-10-22">
-                                                                                                <tbody>
-                                                                                                    <tr>
-                                                                                                        <td style="padding:15px 0px 18px 0px; line-height:30px; text-align:inherit; background-color:#ffffff;"
-                                                                                                            height="100%"
-                                                                                                            valign="top"
-                                                                                                            bgcolor="#ffffff"
-                                                                                                            role="module-content">
-                                                                                                            <div>
-                                                                                                                <div
-                                                                                                                    style="font-family: inherit; text-align: center">
-                                                                                                                    <span
-                                                                                                                        style="color: #0a2540; font-family: &quot;trebuchet ms&quot;, helvetica, sans-serif; font-size: 22px">{{this.name}}</span>
-                                                                                                                </div>
-                                                                                                                <div
-                                                                                                                    style="font-family: inherit; text-align: center">
-                                                                                                                    <span
-                                                                                                                        style="color: #0a2540; font-family: &quot;trebuchet ms&quot;, helvetica, sans-serif; font-size: 18px">${{this.price}}</span>
-                                                                                                                </div>
-                                                                                                                <div>
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                </tbody>
-                                                                                            </table>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                            {{/each}}
 
                                                             <table border="0" cellpadding="0" cellspacing="0"
                                                                 class="module" data-role="module-button"
@@ -587,3 +528,37 @@
 </body>
 
 </html>
+{
+"dish": {
+"left": [
+{
+"name": "Bánh Mì",
+"price": "12",
+"VAR": "https://via.placeholder.com/200"
+},
+{
+"name": "Bánh Cuốn",
+"price": "15",
+"VAR": "https://via.placeholder.com/200"
+},
+{
+"name": "Gỏi Cuốn",
+"price": "10",
+"VAR": "https://via.placeholder.com/200"
+}
+],
+"right": [
+{
+"name": "Gỏi Cuốn",
+"price": "10",
+"VAR": "https://via.placeholder.com/200"
+},
+{
+"name": "Gỏi Cuốn",
+"price": "10",
+"VAR": "https://via.placeholder.com/200"
+}
+]
+},
+"VAR1": "https://via.placeholder.com/200"
+}console.log()
