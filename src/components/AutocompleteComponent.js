@@ -96,7 +96,7 @@ function AutocompleteComponent() {
     const [loadingCsv, setLoadingCsv] = useState(false);
     const [csvStatData, setCsvStatData] = useState([])
 
-    // https://e501-142-188-91-60.ngrok-free.app
+    // https://8bd2-70-51-247-231.ngrok-free.app
 
 
     const handleShowModalStat = async () => {
@@ -110,7 +110,7 @@ function AutocompleteComponent() {
         // categoryName,
         try {
             const response = await fetch(
-                "https://e501-142-188-91-60.ngrok-free.app/api/food/compareprice",
+                "https://8bd2-70-51-247-231.ngrok-free.app/api/food/compareprice",
                 {
                     method: "POST",
                     headers: {
@@ -129,7 +129,6 @@ function AutocompleteComponent() {
             );
 
             const dataCsv = await response.json();
-            console.log(dataCsv)
 
 
             // // console.log(results.data);
@@ -152,7 +151,7 @@ function AutocompleteComponent() {
         // categoryName,
         try {
             const response = await fetch(
-                "https://e501-142-188-91-60.ngrok-free.app/api/food/CSV"
+                "https://8bd2-70-51-247-231.ngrok-free.app/api/food/CSV"
                 ,
                 {
                     method: "POST",
@@ -187,7 +186,7 @@ function AutocompleteComponent() {
         const fetchOptions = async () => {
             try {
                 const response = await fetch(
-                    "https://e501-142-188-91-60.ngrok-free.app/api/food/searchName",
+                    "https://8bd2-70-51-247-231.ngrok-free.app/api/food/searchName",
                     {
                         method: "GET",
                         headers: {
@@ -222,7 +221,7 @@ function AutocompleteComponent() {
         setdownload(true)
         setShowModal(true)
         const response = await fetch(
-            "https://e501-142-188-91-60.ngrok-free.app/api/food/CSV",
+            "https://8bd2-70-51-247-231.ngrok-free.app/api/food/CSV",
             {
                 method: "POST",
                 headers: {
