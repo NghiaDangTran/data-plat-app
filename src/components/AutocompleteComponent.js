@@ -78,6 +78,8 @@ const groupedOptions = {
 const data = Object.keys(groupedOptions)
 
 function AutocompleteComponent() {
+
+
     const [selectedFood, setSelectedFood] = useState([]);
     const [selectedFoodName, setSelectedFoodName] = useState("");
     const [seletedCategory, setSelectedCategory] = useState([])
@@ -96,7 +98,7 @@ function AutocompleteComponent() {
     const [loadingCsv, setLoadingCsv] = useState(false);
     const [csvStatData, setCsvStatData] = useState([])
 
-    // https://8bd2-70-51-247-231.ngrok-free.app
+    // https://13a1-142-181-139-7.ngrok-free.app
 
 
     const handleShowModalStat = async () => {
@@ -110,7 +112,7 @@ function AutocompleteComponent() {
         // categoryName,
         try {
             const response = await fetch(
-                "https://8bd2-70-51-247-231.ngrok-free.app/api/food/compareprice",
+                "https://13a1-142-181-139-7.ngrok-free.app/api/food/compareprice",
                 {
                     method: "POST",
                     headers: {
@@ -151,7 +153,7 @@ function AutocompleteComponent() {
         // categoryName,
         try {
             const response = await fetch(
-                "https://8bd2-70-51-247-231.ngrok-free.app/api/food/CSV"
+                "https://13a1-142-181-139-7.ngrok-free.app/api/food/CSV"
                 ,
                 {
                     method: "POST",
@@ -186,7 +188,7 @@ function AutocompleteComponent() {
         const fetchOptions = async () => {
             try {
                 const response = await fetch(
-                    "https://8bd2-70-51-247-231.ngrok-free.app/api/food/searchName",
+                    "https://13a1-142-181-139-7.ngrok-free.app/api/food/searchName",
                     {
                         method: "GET",
                         headers: {
@@ -221,7 +223,7 @@ function AutocompleteComponent() {
         setdownload(true)
         setShowModal(true)
         const response = await fetch(
-            "https://8bd2-70-51-247-231.ngrok-free.app/api/food/CSV",
+            "https://13a1-142-181-139-7.ngrok-free.app/api/food/CSV",
             {
                 method: "POST",
                 headers: {
