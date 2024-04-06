@@ -12,7 +12,7 @@ export default function AddDataCard() {
 
             setStatus("Waiting to update...")
             const response = await fetch(
-                "https://13a1-142-181-139-7.ngrok-free.app/api/food/insertFoodName",
+                "https://desktop-pk9v2ru.tail7b2c8.ts.net/api/food/insertFoodName",
                 {
                     method: "POST",
                     headers: {
