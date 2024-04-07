@@ -98,7 +98,7 @@ function AutocompleteComponent() {
     const [loadingCsv, setLoadingCsv] = useState(false);
     const [csvStatData, setCsvStatData] = useState([])
 
-    // https://desktop-pk9v2ru.tail7b2c8.ts.net
+    // https://raspberrypi1.tail7b2c8.ts.net
 
 
     const handleShowModalStat = async () => {
@@ -112,7 +112,7 @@ function AutocompleteComponent() {
         // categoryName,
         try {
             const response = await fetch(
-                "https://desktop-pk9v2ru.tail7b2c8.ts.net/api/food/compareprice",
+                "https://raspberrypi1.tail7b2c8.ts.net/api/food/compareprice",
                 {
                     method: "POST",
                     headers: {
@@ -153,7 +153,7 @@ function AutocompleteComponent() {
         // categoryName,
         try {
             const response = await fetch(
-                "https://desktop-pk9v2ru.tail7b2c8.ts.net/api/food/CSV"
+                "https://raspberrypi1.tail7b2c8.ts.net/api/food/CSV"
                 ,
                 {
                     method: "POST",
@@ -188,7 +188,7 @@ function AutocompleteComponent() {
         const fetchOptions = async () => {
             try {
                 const response = await fetch(
-                    "https://desktop-pk9v2ru.tail7b2c8.ts.net/api/food/searchName",
+                    "https://raspberrypi1.tail7b2c8.ts.net/api/food/searchName",
                     {
                         method: "GET",
                         headers: {
@@ -223,7 +223,7 @@ function AutocompleteComponent() {
         setdownload(true)
         setShowModal(true)
         const response = await fetch(
-            "https://desktop-pk9v2ru.tail7b2c8.ts.net/api/food/CSV",
+            "https://raspberrypi1.tail7b2c8.ts.net/api/food/CSV",
             {
                 method: "POST",
                 headers: {
