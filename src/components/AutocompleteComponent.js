@@ -92,27 +92,20 @@ function AutocompleteComponent() {
     const [options, setOptions] = useState([]); // State to store fetched options
     const [download, setdownload] = useState(false);
     const [selectedProvince, setSelectedProvince] = useState("");
-    const typeaheadRef = useRef(null);
     const [showModal, setShowModal] = useState(false);
     const [csvData, setCsvData] = useState([]);
     const [loadingCsv, setLoadingCsv] = useState(false);
     const [csvStatData, setCsvStatData] = useState([])
 
-    // https://raspberrypi1.tail7b2c8.ts.net
 
 
     const handleShowModalStat = async () => {
         setShowModal(true);
         setLoadingCsv(true);
-        //   foodName,
-        // startDate,
-        // endDate,
-        // storeName,
-        // locationName,
-        // categoryName,
+
         try {
             const response = await fetch(
-                "https://raspberrypi1.tail7b2c8.ts.net/api/food/compareprice",
+                "https://laptop-ga134362.tail87d12.ts.net/api/food/compareprice",
                 {
                     method: "POST",
                     headers: {
@@ -133,7 +126,6 @@ function AutocompleteComponent() {
             const dataCsv = await response.json();
 
 
-            // // console.log(results.data);
             setCsvStatData(dataCsv.stat)
             setCsvData(dataCsv.csv);
         } catch (error) {
@@ -145,15 +137,10 @@ function AutocompleteComponent() {
     const handleShowModal = async () => {
         setShowModal(true);
         setLoadingCsv(true);
-        //   foodName,
-        // startDate,
-        // endDate,
-        // storeName,
-        // locationName,
-        // categoryName,
+
         try {
             const response = await fetch(
-                "https://raspberrypi1.tail7b2c8.ts.net/api/food/CSV"
+                "https://laptop-ga134362.tail87d12.ts.net/api/food/CSV"
                 ,
                 {
                     method: "POST",
@@ -176,7 +163,7 @@ function AutocompleteComponent() {
                 header: true,
                 skipEmptyLines: true,
             });
-            // console.log(results.data);
+            console.log(results.data)
             setCsvData(results.data);
         } catch (error) {
             console.error("Failed to fetch CSV data:", error);
@@ -188,7 +175,7 @@ function AutocompleteComponent() {
         const fetchOptions = async () => {
             try {
                 const response = await fetch(
-                    "https://raspberrypi1.tail7b2c8.ts.net/api/food/searchName",
+                    "https://laptop-ga134362.tail87d12.ts.net/api/food/searchName",
                     {
                         method: "GET",
                         headers: {
@@ -223,7 +210,7 @@ function AutocompleteComponent() {
         setdownload(true)
         setShowModal(true)
         const response = await fetch(
-            "https://raspberrypi1.tail7b2c8.ts.net/api/food/CSV",
+            "https://laptop-ga134362.tail87d12.ts.net/api/food/CSV",
             {
                 method: "POST",
                 headers: {
