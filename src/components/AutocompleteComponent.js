@@ -105,7 +105,7 @@ function AutocompleteComponent() {
 
         try {
             const response = await fetch(
-                "https://laptop-ga134362.tail87d12.ts.net/api/food/compareprice",
+                "https://laptop-ga134362.tail7b2c8.ts.net/api/food/compareprice",
                 {
                     method: "POST",
                     headers: {
@@ -140,7 +140,7 @@ function AutocompleteComponent() {
 
         try {
             const response = await fetch(
-                "https://laptop-ga134362.tail87d12.ts.net/api/food/CSV"
+                "https://laptop-ga134362.tail7b2c8.ts.net/api/food/CSV"
                 ,
                 {
                     method: "POST",
@@ -175,7 +175,7 @@ function AutocompleteComponent() {
         const fetchOptions = async () => {
             try {
                 const response = await fetch(
-                    "https://laptop-ga134362.tail87d12.ts.net/api/food/searchName",
+                    "https://laptop-ga134362.tail7b2c8.ts.net/api/food/searchName",
                     {
                         method: "GET",
                         headers: {
@@ -210,7 +210,7 @@ function AutocompleteComponent() {
         setdownload(true)
         setShowModal(true)
         const response = await fetch(
-            "https://laptop-ga134362.tail87d12.ts.net/api/food/CSV",
+            "https://laptop-ga134362.tail7b2c8.ts.net/api/food/CSV",
             {
                 method: "POST",
                 headers: {
