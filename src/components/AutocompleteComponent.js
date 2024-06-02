@@ -84,7 +84,7 @@ function AutocompleteComponent() {
     const [selectedFoodName, setSelectedFoodName] = useState("");
     const [seletedCategory, setSelectedCategory] = useState([])
     const [seletedCategoryname, setSelectedCategoryName] = useState("")
-
+    const [uniqueDates, setUniqueDates] = useState([]);
     const [storeName, setStoreName] = useState("")
     const [startDate, setStartDate] = useState((new Date()).setHours(0, 0, 0, 0));
     const [endDate, setEndDate] = useState((new Date()).setHours(23, 59, 59, 999));
@@ -105,7 +105,7 @@ function AutocompleteComponent() {
 
         try {
             const response = await fetch(
-                "https://laptop-ga134362.tail7b2c8.ts.net/api/food/compareprice",
+                "http://localhost:3000/api/food/compareprice",
                 {
                     method: "POST",
                     headers: {
@@ -134,13 +134,71 @@ function AutocompleteComponent() {
         setLoadingCsv(false);
     };
 
+    const handleShowModalTest = async () => {
+        setShowModal(true);
+        setLoadingCsv(true);
+
+        try {
+
+
+            fetch(
+                "http://localhost:3000/api/food/CSV2"
+                ,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "ngrok-skip-browser-warning": "1",
+                    },
+                    body: JSON.stringify({
+                        foodName: selectedFood.length > 0 ? selectedFood[0] : selectedFoodName,
+                        categoryName: seletedCategory.length > 0 ? seletedCategory[0] : seletedCategoryname,
+                        storeName: storeName,
+                        startDate: startDate,
+                        endDate: endDate,
+                        locationName: selectedProvince,
+                    }),
+                }
+            )
+                .then(response => response.text())
+                .then(data => {
+                    const parsedData = [];
+                    const dates = new Set();
+
+                    // Parse CSV data
+                    Papa.parse(data, {
+                        header: true,
+                        skipEmptyLines: true,
+                        complete: (results) => {
+                            results.data.slice(1).forEach(row => { // Skip the first row
+                                parsedData.push(row);
+                                Object.keys(row).forEach(key => {
+                                    if (key !== 'name' && key !== 'FoodCategory' && key !== 'StoreName' && key !== 'StoreLocation') {
+                                        dates.add(key);
+                                    }
+                                });
+                            });
+
+                        }
+                    });
+                    setCsvData(parsedData);
+                    setUniqueDates(Array.from(dates).sort());
+                })
+                .catch(error => {
+                    console.error('Error fetching CSV data:', error);
+                });
+        } catch (error) {
+            console.error("Failed to fetch CSV data:", error);
+        }
+        setLoadingCsv(false);
+    };
     const handleShowModal = async () => {
         setShowModal(true);
         setLoadingCsv(true);
 
         try {
             const response = await fetch(
-                "https://laptop-ga134362.tail7b2c8.ts.net/api/food/CSV"
+                "http://localhost:3000/api/food/CSV"
                 ,
                 {
                     method: "POST",
@@ -175,7 +233,7 @@ function AutocompleteComponent() {
         const fetchOptions = async () => {
             try {
                 const response = await fetch(
-                    "https://laptop-ga134362.tail7b2c8.ts.net/api/food/searchName",
+                    "http://localhost:3000/api/food/searchName",
                     {
                         method: "GET",
                         headers: {
@@ -209,8 +267,13 @@ function AutocompleteComponent() {
     const handleDownload = async () => {
         setdownload(true)
         setShowModal(true)
+        const selectedFoodList = ["chicken", "almonds", "ground beef", "apple", "ground pork", "pasta"];
+        const food = selectedFood.length > 0 ? selectedFood[0] : selectedFoodName;
+        const url2 = selectedFoodList.includes(food)
+            ? "http://localhost:3000/api/food/CSV2"
+            : "http://localhost:3000/api/food/CSV";
         const response = await fetch(
-            "https://laptop-ga134362.tail7b2c8.ts.net/api/food/CSV",
+            url2,
             {
                 method: "POST",
                 headers: {
@@ -376,7 +439,24 @@ function AutocompleteComponent() {
                             variant="primary"
                             block
                             style={{ borderRadius: "25px" }}
-                            onClick={handleShowModal}
+                            onClick={() => {
+
+                                if (
+                                    selectedFood.length > 0
+                                        ? ["chicken", "almonds", "ground beef", "apple", "ground pork", "pasta"].includes(selectedFood[0])
+                                        : ["chicken", "almonds", "ground beef", "apple", "ground pork", "pasta"].includes(selectedFoodName)
+                                ) {
+                                    handleShowModalTest()
+                                }
+
+                                else {
+                                    handleShowModal()
+
+                                }
+
+
+
+                            }}
                         >
                             Show Data
                         </Button>
@@ -416,6 +496,7 @@ function AutocompleteComponent() {
                             setdownload(false)
                             setShowModal(false)
                             setCsvStatData([])
+                            setCsvData([])
                         }}
                         size="xl"
                         centered
@@ -429,55 +510,93 @@ function AutocompleteComponent() {
                                 <span>  Your Data is loading...                               <Spinner animation="border" />
                                 </span>
                             ) : (
-                                        <>
 
-                                            ({csvStatData.length > 0 && (
-                                                <pre>
-                                                    {JSON.stringify(csvStatData, null, 2)}
-                                                </pre>
-                                            )} )
 
-                                            (<div style={{ width: "90%", margin: "auto" }}>
+                                        (
+                                            selectedFood.length > 0
+                                                ? ["chicken", "almonds", "ground beef", "apple", "ground pork", "pasta"].includes(selectedFood[0])
+                                                : ["chicken", "almonds", "ground beef", "apple", "ground pork", "pasta"].includes(selectedFoodName)
+                                        ) ? <>
+                                            <div style={{ width: "90%", margin: "auto" }}>
                                                 <table className="table table-bordered">
                                                     <thead>
                                                         <tr>
                                                             <th>Food Name</th>
-                                                            <th>Search From</th>
-
-                                                            <th>Food Category</th>
-                                                            <th>Store Name</th>
-                                                            <th>Store Location</th>
-                                                            <th>Date</th>
-                                                            <th>Price</th>
-                                                            <th>Unit Count</th>
-                                                            <th>Unit Type</th>
-                                                            <th>Base Quantity</th>
-                                                            <th>Base Unit</th>
-                                                            <th>Price Per Unit</th>
+                                                            {uniqueDates.map(date => (
+                                                                <th key={date}>{date}</th>
+                                                            ))}
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         {csvData.map((row, index) => (
                                                             <tr key={index}>
-                                                                <td>{row.FoodName}</td>
-                                                                <td>{row.SearchFrom}</td>
-
-                                                                <td>{row.FoodCategory}</td>
-                                                                <td>{row.StoreName}</td>
-                                                                <td>{row.StoreLocation}</td>
-                                                                <td>{row.Date}</td>
-                                                                <td>{row.Price}</td>
-                                                                <td>{row.UnitCount}</td>
-                                                                <td>{row.UnitType}</td>
-                                                                <td>{row.BaseQuantity}</td>
-                                                                <td>{row.BaseUnit}</td>
-                                                                <td>{row.PricePerUnit}</td>
+                                                                <td>{row.name}</td>
+                                                                {uniqueDates.map(date => (
+                                                                    <td key={date} style={{ minWidth: '250px', padding: '10px' }}>
+                                                                        {row[date] ? (
+                                                                            <>
+                                                                                {row[date].split(',').map((item, i) => (
+                                                                                    <div key={i} style={{ marginBottom: '5px' }}>{item}</div>
+                                                                                ))}
+                                                                            </>
+                                                                        ) : ''}
+                                                                    </td>
+                                                                ))}
                                                             </tr>
                                                         ))}
                                                     </tbody>
                                                 </table>
-                                            </div>)
-                                        </>
+                                            </div>
+                                        </> :
+                                            <>
+
+                                                ({csvStatData.length > 0 && (
+                                                    <pre>
+                                                        {JSON.stringify(csvStatData, null, 2)}
+                                                    </pre>
+                                                )} )
+
+                                                (<div style={{ width: "90%", margin: "auto" }}>
+                                                    <table className="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Food Name</th>
+                                                                <th>Search From</th>
+
+                                                                <th>Food Category</th>
+                                                                <th>Store Name</th>
+                                                                <th>Store Location</th>
+                                                                <th>Date</th>
+                                                                <th>Price</th>
+                                                                <th>Unit Count</th>
+                                                                <th>Unit Type</th>
+                                                                <th>Base Quantity</th>
+                                                                <th>Base Unit</th>
+                                                                <th>Price Per Unit</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {csvData.map((row, index) => (
+                                                                <tr key={index}>
+                                                                    <td>{row.FoodName}</td>
+                                                                    <td>{row.SearchFrom}</td>
+
+                                                                    <td>{row.FoodCategory}</td>
+                                                                    <td>{row.StoreName}</td>
+                                                                    <td>{row.StoreLocation}</td>
+                                                                    <td>{row.Date}</td>
+                                                                    <td>{row.Price}</td>
+                                                                    <td>{row.UnitCount}</td>
+                                                                    <td>{row.UnitType}</td>
+                                                                    <td>{row.BaseQuantity}</td>
+                                                                    <td>{row.BaseUnit}</td>
+                                                                    <td>{row.PricePerUnit}</td>
+                                                                </tr>
+                                                            ))}
+                                                        </tbody>
+                                                    </table>
+                                                </div>)
+                                            </>
 
 
                             )

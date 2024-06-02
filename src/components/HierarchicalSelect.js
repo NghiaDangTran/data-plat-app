@@ -81,39 +81,9 @@ function HierarchicalSelect() {
 
     const [showModal, setShowModal] = useState(false);
     const [csvData, setCsvData] = useState([]);
+    const [uniqueDates, setUniqueDates] = useState([]);
     const [loadingCsv, setLoadingCsv] = useState(false);
-    const handleShowModalAll = async () => {
-        setShowModal(true);
-        setLoadingCsv(true);
-        try {
-            const response = await fetch(
-                "https://laptop-ga134362.tail7b2c8.ts.net/api/food/CSVall",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "ngrok-skip-browser-warning": "1",
-                    },
-                    body: JSON.stringify({
-                        categoryName: selectedFood[0], // assuming the user selects only one food
-                        // store: selectedStore,
-                        // startDate: startDate.toISOString().split("T")[0],
-                        // endDate: endDate.toISOString().split("T")[0],
-                    }),
-                }
-            );
-            const csvText = await response.text();
-            const results = Papa.parse(csvText, {
-                header: true,
-                skipEmptyLines: true,
-            });
-            //   console.log(results.data);
-            setCsvData(results.data);
-        } catch (error) {
-            console.error("Failed to fetch CSV data:", error);
-        }
-        setLoadingCsv(false);
-    };
+
 
     const handleShowModal = async () => {
         setShowModal(true);
@@ -124,9 +94,10 @@ function HierarchicalSelect() {
         // storeName,
         // locationName,
         // categoryName,
+
         try {
             const response = await fetch(
-                "https://laptop-ga134362.tail7b2c8.ts.net/api/food/CSV",
+                "http://localhost:3000/api/food/CSV",
                 {
                     method: "POST",
                     headers: {
@@ -147,7 +118,7 @@ function HierarchicalSelect() {
                 header: true,
                 skipEmptyLines: true,
             });
-            // console.log(results.data);
+            console.log("test")
             setCsvData(results.data);
         } catch (error) {
             console.error("Failed to fetch CSV data:", error);
@@ -158,7 +129,7 @@ function HierarchicalSelect() {
         // Fetch options from the API
         const fetchOptions = async () => {
             try {
-                // const response = await fetch("https://laptop-ga134362.tail7b2c8.ts.net/api/food/name", {
+                // const response = await fetch("http://localhost:3000/api/food/name", {
                 //   headers: {
                 //     "ngrok-skip-browser-warning": "1",
                 //   },
@@ -177,7 +148,7 @@ function HierarchicalSelect() {
 
     const handleDownload = async () => {
         const response = await fetch(
-            "https://laptop-ga134362.tail7b2c8.ts.net/api/food/CSV",
+            "http://localhost:3000/api/food/CSV",
             {
                 method: "POST",
                 headers: {
@@ -294,7 +265,10 @@ function HierarchicalSelect() {
                             variant="primary"
                             block
                             style={{ borderRadius: "25px" }}
-                            onClick={handleShowModal}
+                            onClick={() => {
+
+                                handleShowModal()
+                            }}
                         >
                             Show Data
                         </Button>

@@ -12,7 +12,7 @@ export default function AddDataCard() {
 
             setStatus("Waiting to update...")
             const response = await fetch(
-                "https://laptop-ga134362.tail7b2c8.ts.net/api/food/insertFoodName",
+                "http://localhost:3000/api/food/insertFoodName",
                 {
                     method: "POST",
                     headers: {
