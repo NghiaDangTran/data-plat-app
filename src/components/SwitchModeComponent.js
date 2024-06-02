@@ -47,7 +47,12 @@ function SwitchModeComponent() {
                         <HierarchicalSelect />
                     ) : <AddDataCard />}
                 </Card.Body>
-                <p>Note: If after you search and don't find the food you want try to add it to the data base</p>
+                <p>Note: If after you search and don't find the food you want try to add it to the data base
+                    <br></br>
+                    <br></br>
+                    Note2: Current support for horizontal data include food with name "chicken", "almonds", "ground beef", "apple", "ground pork", "pasta"</p>
+                <p></p>
+
             </Card>
 
         </Container>

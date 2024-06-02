@@ -105,7 +105,7 @@ function AutocompleteComponent() {
 
         try {
             const response = await fetch(
-                "http://localhost:3000/api/food/compareprice",
+                "https://laptop-ga134362.tail7b2c8.ts.net/api/food/compareprice",
                 {
                     method: "POST",
                     headers: {
@@ -142,7 +142,7 @@ function AutocompleteComponent() {
 
 
             fetch(
-                "http://localhost:3000/api/food/CSV2"
+                "https://laptop-ga134362.tail7b2c8.ts.net/api/food/CSV2"
                 ,
                 {
                     method: "POST",
@@ -198,7 +198,7 @@ function AutocompleteComponent() {
 
         try {
             const response = await fetch(
-                "http://localhost:3000/api/food/CSV"
+                "https://laptop-ga134362.tail7b2c8.ts.net/api/food/CSV"
                 ,
                 {
                     method: "POST",
@@ -233,7 +233,7 @@ function AutocompleteComponent() {
         const fetchOptions = async () => {
             try {
                 const response = await fetch(
-                    "http://localhost:3000/api/food/searchName",
+                    "https://laptop-ga134362.tail7b2c8.ts.net/api/food/searchName",
                     {
                         method: "GET",
                         headers: {
@@ -270,8 +270,8 @@ function AutocompleteComponent() {
         const selectedFoodList = ["chicken", "almonds", "ground beef", "apple", "ground pork", "pasta"];
         const food = selectedFood.length > 0 ? selectedFood[0] : selectedFoodName;
         const url2 = selectedFoodList.includes(food)
-            ? "http://localhost:3000/api/food/CSV2"
-            : "http://localhost:3000/api/food/CSV";
+            ? "https://laptop-ga134362.tail7b2c8.ts.net/api/food/CSV2"
+            : "https://laptop-ga134362.tail7b2c8.ts.net/api/food/CSV";
         const response = await fetch(
             url2,
             {
